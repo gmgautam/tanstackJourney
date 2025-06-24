@@ -33,17 +33,19 @@ const AddTodoForm = () => {
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Form submitted!"); // <== THIS MUST SHOW!
+    e.preventDefault(); // Must be the FIRST line
 
-    // Optional: Add validation to prevent empty submissions
-    if (!formData.title || !formData.body) {
-      alert("Please fill in both title and body");
-      return;
+    try {
+      // Validate fields (using trim() to ignore whitespace)
+      if (!formData.title.trim() || !formData.body.trim()) {
+        alert("Please fill in both title and body");
+        return;
+      }
+
+      MutateAddPost(formData);
+    } catch (error) {
+      console.error("Submission error:", error);
     }
-    MutateAddPost(formData);
-    console.log(formData);
-    // Reset formData to an empty object with the same structure
   };
 
   return (
